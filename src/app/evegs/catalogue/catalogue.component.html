@@ -1,0 +1,20 @@
+<form [formGroup]="articleForm" (ngSubmit)="ajouterArticle(articleForm.value)">
+  <label>Reference: <input formControlName="reference"></label>
+  <label>Libellé: <input formControlName="libelle"></label>
+  <button type="submit" [disabled]="articleForm.invalid || articleForm.pristine">Ajouter</button>
+  <div *ngIf="articleForm.controls.reference.errors?.referenceUnique">
+    Cette référence existe déjà.
+  </div>
+</form>
+
+<p>Form value: {{ articleForm.value | json }}</p>
+<p>Form status: {{ articleForm.status | json }}</p>
+
+<table>
+  <thead>
+    <tr><th>Reference</th><th>Libellé</th></tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let article of articles; let i = index'><td>{{article.reference}}</td><td>{{article.libelle}}</td><td><button (click)='supprimerArticle(i)'>Supprimer</button></td></tr>
+  </tbody>
+</table>
