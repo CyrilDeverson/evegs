@@ -15,7 +15,7 @@ export class CatalogueService {
 
   ajouter(article: Article): Observable<Article[]> {
     if (this.chercherParReference(article.reference)) {
-      return Observable.throw('La référence \'' + article.reference + '\' existe déjà');
+      return Observable.throw(new Error('La référence \'' + article.reference + '\' existe déjà'));
     }
     console.log('Ajout de l\'article: ' + JSON.stringify(article));
     this.articles.push(article);
@@ -26,9 +26,9 @@ export class CatalogueService {
     return this.articles.find(a => a.reference === reference);
   }
 
-  supprimer(index: number): Observable<Article[]> {
-    console.log('Suppression de l\'article: ' + index);
-    this.articles = this.articles.filter((article, i) => index !== i);
+  supprimer(reference: String): Observable<Article[]> {
+    console.log('Suppression de l\'article: ' + reference);
+    this.articles = this.articles.filter((article, i) => reference !== article.reference);
     return this.lister();
   }
 
