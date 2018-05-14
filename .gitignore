@@ -5,8 +5,10 @@
 /dist-server
 /tmp
 /out-tsc
+/target
 
 # dependencies
+/node
 /node_modules
 
 # IDEs and editors
