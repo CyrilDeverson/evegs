@@ -48,14 +48,18 @@
         <!-- Action Column -->
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-          <mat-cell *matCellDef="let article"> <button mat-button (click)='supprimerArticle(article.reference)'>Supprimer</button> </mat-cell>
+          <mat-cell *matCellDef="let article">
+            <button mat-icon-button (click)='supprimerArticle(article.reference)'>
+              <mat-icon>delete forever</mat-icon>
+            </button>
+          </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
-      
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-      </div>
-    </mat-card-content>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </mat-card-content>
 </mat-card>

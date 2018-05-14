@@ -10,7 +10,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 })
 export class CatalogueComponent implements OnInit, AfterViewInit {
 
-  private articleForm: FormGroup;
+  articleForm: FormGroup;
 
   private articles: Article[];
 
