@@ -1,7 +1,8 @@
+
+import {of as observableOf, throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
+
+
 
 @Injectable()
 export class CatalogueService {
@@ -15,7 +16,7 @@ export class CatalogueService {
 
   ajouter(article: Article): Observable<Article[]> {
     if (this.chercherParReference(article.reference)) {
-      return Observable.throw(new Error('La référence \'' + article.reference + '\' existe déjà'));
+      return observableThrowError(new Error('La référence \'' + article.reference + '\' existe déjà'));
     }
     console.log('Ajout de l\'article: ' + JSON.stringify(article));
     this.articles.push(article);
@@ -33,7 +34,7 @@ export class CatalogueService {
   }
 
   lister(): Observable<Article[]> {
-    return Observable.of(this.articles);
+    return observableOf(this.articles);
   }
 }
 
