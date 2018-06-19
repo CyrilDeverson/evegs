@@ -1,24 +1,25 @@
-<mat-card class="article">
-    <mat-card-header>
-      <mat-card-title>Ajouter un article</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form novalidate [formGroup]="articleForm" (ngSubmit)="ajouterArticle(articleForm.value)">
-        <mat-form-field>
-          <input matInput placeholder="Référence" formControlName="reference"/>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput placeholder="Libellé" formControlName="libelle"/>
-        </mat-form-field>
-        <button mat-icon-button type="submit" [disabled]="articleForm.invalid || articleForm.pristine">
-          <mat-icon>create</mat-icon>
-        </button>
-        <div *ngIf="articleForm.controls.reference.errors?.referenceUnique">
-          Cette référence existe déjà.
-        </div>
-      </form>
-    </mat-card-content>
-</mat-card>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Ajouter un article</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <form novalidate [formGroup]="articleForm" (ngSubmit)="ajouterArticle(articleForm.value)">
+      <mat-form-field>
+        <input matInput placeholder="Référence" formControlName="reference"/>
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput placeholder="Libellé" formControlName="libelle"/>
+      </mat-form-field>
+      <button mat-icon-button type="submit" [disabled]="articleForm.invalid || articleForm.pristine">
+        <mat-icon>create</mat-icon>
+      </button>
+      <div *ngIf="articleForm.controls.reference.errors?.referenceUnique">
+        Cette référence existe déjà.
+      </div>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>
 
 <mat-card class="articles">
   <mat-card-header>
