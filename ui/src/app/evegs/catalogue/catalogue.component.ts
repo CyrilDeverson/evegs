@@ -6,7 +6,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 @Component({
   selector: 'app-catalogue',
   templateUrl: './catalogue.component.html',
-  styleUrls: ['./catalogue.component.sass']
+  styleUrls: ['./catalogue.component.scss']
 })
 export class CatalogueComponent implements OnInit, AfterViewInit {
 
