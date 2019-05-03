@@ -1,43 +1,37 @@
 
-import {of as observableOf, throwError as observableThrowError,  Observable } from 'rxjs';
+import {of as observableOf, throwError as observableThrowError,  Observable, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
+export class Article {
+  constructor(public reference: String, public libelle: String) {}
+}
 
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CatalogueService {
-  DEFAULT_ARTICLE = new Article ('legrand-ref1', 'Prise Courant');
+  private static readonly DEFAULT_ARTICLE = new Article('legrand-ref1', 'Prise Courant');
 
-  private articles = new Array<Article>();
+  private _articles = new BehaviorSubject<Article[]>([CatalogueService.DEFAULT_ARTICLE]);
 
-  constructor() {
-    this.articles.push(this.DEFAULT_ARTICLE);
-  }
-
-  ajouter(article: Article): Observable<Article[]> {
+  ajouter(article: Article) {
     if (this.chercherParReference(article.reference)) {
       return observableThrowError(new Error('La référence \'' + article.reference + '\' existe déjà'));
     }
     console.log('Ajout de l\'article: ' + JSON.stringify(article));
-    this.articles.push(article);
-    return this.lister();
+    this._articles.next([...this._articles.getValue(), article]);
   }
 
   chercherParReference(reference: String): Article | undefined {
-    return this.articles.find(a => a.reference === reference);
+    return this._articles.getValue().find(a => a.reference === reference);
   }
 
-  supprimer(reference: String): Observable<Article[]> {
+  supprimer(reference: String) {
     console.log('Suppression de l\'article: ' + reference);
-    this.articles = this.articles.filter((article, i) => reference !== article.reference);
-    return this.lister();
+    this._articles.next(this._articles.getValue().filter((article, i) => reference !== article.reference));
   }
 
-  lister(): Observable<Article[]> {
-    return observableOf(this.articles);
+  get articles(): Observable<Article[]> {
+    return this._articles;
   }
-}
-
-export class Article {
-  constructor(public reference: String, public libelle: String) {}
 }

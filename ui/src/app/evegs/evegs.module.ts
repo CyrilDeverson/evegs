@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CatalogueService } from './catalogue/catalogue.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
@@ -33,6 +32,6 @@ import {
   ],
   declarations: [CatalogueComponent],
   exports: [CatalogueComponent],
-  providers: [CatalogueService]
+  providers: []
 })
 export class EvegsModule { }

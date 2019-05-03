@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CatalogueService, Article } from './catalogue.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, NgForm } from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { timeout } from 'q';
 
 @Component({
   selector: 'app-catalogue',
@@ -10,9 +11,8 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 })
 export class CatalogueComponent implements OnInit, AfterViewInit {
 
+//  @ViewChild('formDirective') private formDirective: NgForm;
   articleForm: FormGroup;
-
-  private articles: Article[];
 
   displayedColumns = ['reference', 'libelle', 'action'];
   dataSource: MatTableDataSource<Article> = new MatTableDataSource<Article>();
@@ -21,40 +21,28 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private fb: FormBuilder, private catalogueService: CatalogueService) {
-    this.initForm();
   }
 
-  initForm() {
+  ngOnInit() {
     this.articleForm = this.fb.group({
       reference: ['', [Validators.required, referenceUnique(this.catalogueService)]],
       libelle: ['', Validators.required]
     });
+    this.catalogueService.articles.subscribe(articles => this.dataSource.data = articles);
   }
 
-  ngOnInit() {
-    this.listerArticles();
-  }
+  onSubmit() {
+    this.ajouterArticle(this.articleForm.value);
 
-  setArticles(articles: Article[]) {
-    this.articles = articles;
-    this.dataSource.data = articles;
+//    this.formDirective.resetForm();
   }
 
   ajouterArticle(article: Article) {
-    this.catalogueService.ajouter(article).subscribe(
-      articles => this.setArticles(articles),
-      error => console.log(error)
-    );
-
-    this.initForm();
+    this.catalogueService.ajouter(article);
   }
 
   supprimerArticle(reference: String) {
-    this.catalogueService.supprimer(reference).subscribe(articles => this.setArticles(articles));
-  }
-
-  listerArticles() {
-    this.catalogueService.lister().subscribe(articles => this.setArticles(articles));
+    this.catalogueService.supprimer(reference);
   }
 
   ngAfterViewInit() {

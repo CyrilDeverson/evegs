@@ -1,21 +1,26 @@
 <mat-accordion>
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <mat-panel-title>Ajouter un article</mat-panel-title>
+      <mat-panel-title i18n="@@catalogue.add-article">Ajouter un article</mat-panel-title>
     </mat-expansion-panel-header>
 
-    <form novalidate [formGroup]="articleForm" (ngSubmit)="ajouterArticle(articleForm.value)">
+    <form novalidate [formGroup]="articleForm" #formDirective (ngSubmit)="onSubmit(); formDirective.resetForm()">
       <mat-form-field>
-        <input matInput placeholder="Référence" formControlName="reference"/>
+        <mat-label i18n="@@article.reference">Référence</mat-label>
+        <input matInput formControlName="reference"/>
       </mat-form-field>
       <mat-form-field>
-          <input matInput placeholder="Libellé" formControlName="libelle"/>
+          <mat-label i18n="@@article.label">Libellé</mat-label>
+          <input matInput formControlName="libelle"/>
       </mat-form-field>
-      <button mat-icon-button type="submit" [disabled]="articleForm.invalid || articleForm.pristine">
-        <mat-icon>create</mat-icon>
+      <button mat-icon-button type="submit" color="primary" [disabled]="articleForm.invalid || articleForm.pristine">
+        <mat-icon>add_circle</mat-icon>
       </button>
-      <div *ngIf="articleForm.controls.reference.errors?.referenceUnique">
-        Cette référence existe déjà.
+      <button mat-icon-button type="reset" color="warn" [disabled]="!articleForm.touched">
+          <mat-icon>cancel</mat-icon>
+      </button>
+        <div *ngIf="articleForm.controls.reference.errors?.referenceUnique">
+        <span i18n="@@catalogue.reference-exists">Cette référence existe déjà.</span>
       </div>
     </form>
   </mat-expansion-panel>
@@ -23,12 +28,12 @@
 
 <mat-card class="articles">
   <mat-card-header>
-      <mat-card-title>Lister les articles</mat-card-title>
+      <mat-card-title i18n="@@catalogue.list">Lister les articles</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div>
       <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <input matInput (keyup)="applyFilter($event.target.value)" i18n-placeholder="@@catalogue.filter" placeholder="Filtrer">
       </mat-form-field>
     </div>
 
@@ -36,22 +41,22 @@
       <mat-table [dataSource]="dataSource" matSort>
         <!-- Reference Column -->
         <ng-container matColumnDef="reference">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Référence </mat-header-cell>
-          <mat-cell *matCellDef="let article"> {{article.reference}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@article.reference">Référence</mat-header-cell>
+          <mat-cell *matCellDef="let article">{{article.reference}}</mat-cell>
         </ng-container>
 
         <!-- Libelle Column -->
         <ng-container matColumnDef="libelle">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Libellé </mat-header-cell>
-          <mat-cell *matCellDef="let article"> {{article.libelle}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header i18n="@@article.label">Libellé</mat-header-cell>
+          <mat-cell *matCellDef="let article">{{article.libelle}} </mat-cell>
         </ng-container>
 
         <!-- Action Column -->
         <ng-container matColumnDef="action">
-          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef i18n="@@catalogue.action">Action</mat-header-cell>
           <mat-cell *matCellDef="let article">
-            <button mat-icon-button (click)='supprimerArticle(article.reference)'>
-              <mat-icon>delete forever</mat-icon>
+            <button mat-icon-button color="accent" (click)='supprimerArticle(article.reference)'>
+              <mat-icon>remove_circle</mat-icon>
             </button>
           </mat-cell>
         </ng-container>
