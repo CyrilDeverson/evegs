@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CatalogueService, Article } from './catalogue.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, NgForm } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { timeout } from 'q';
 
 @Component({
@@ -11,14 +13,14 @@ import { timeout } from 'q';
 })
 export class CatalogueComponent implements OnInit, AfterViewInit {
 
-//  @ViewChild('formDirective') private formDirective: NgForm;
+  @ViewChild('formDirective', { static: false }) private formDirective: NgForm;
   articleForm: FormGroup;
 
   displayedColumns = ['reference', 'libelle', 'action'];
   dataSource: MatTableDataSource<Article> = new MatTableDataSource<Article>();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private fb: FormBuilder, private catalogueService: CatalogueService) {
   }
