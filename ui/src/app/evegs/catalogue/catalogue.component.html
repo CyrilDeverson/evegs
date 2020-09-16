@@ -4,7 +4,7 @@
       <mat-panel-title i18n="@@catalogue.add-article">Ajouter un article</mat-panel-title>
     </mat-expansion-panel-header>
 
-    <form novalidate [formGroup]="articleForm" #formDirective (ngSubmit)="onSubmit(); formDirective.resetForm()">
+    <form novalidate [formGroup]="articleForm" #formDirective="ngForm" (ngSubmit)="onSubmit(); formDirective.resetForm()">
       <mat-form-field>
         <mat-label i18n="@@article.reference">Référence</mat-label>
         <input matInput formControlName="reference"/>
