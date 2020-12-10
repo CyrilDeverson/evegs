@@ -33,7 +33,7 @@
   <mat-card-content>
     <div>
       <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" i18n-placeholder="@@catalogue.filter" placeholder="Filtrer">
+        <input matInput #filter (keyup)="applyFilter(filter.value)" i18n-placeholder="@@catalogue.filter" placeholder="Filtrer">
       </mat-form-field>
     </div>
 

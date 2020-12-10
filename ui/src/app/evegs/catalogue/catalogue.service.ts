@@ -16,7 +16,7 @@ export class CatalogueService {
 
   ajouter(article: Article) {
     if (this.chercherParReference(article.reference)) {
-      return observableThrowError(new Error('La référence \'' + article.reference + '\' existe déjà'));
+      throw new Error('La référence \'' + article.reference + '\' existe déjà');
     }
     console.log('Ajout de l\'article: ' + JSON.stringify(article));
     this._articles.next([...this._articles.getValue(), article]);

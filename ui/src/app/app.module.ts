@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EvegsModule } from './evegs/evegs.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { EvegsModule } from './evegs/evegs.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,8 @@ import { EvegsModule } from './evegs/evegs.module';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
     EvegsModule
   ],
   providers: [],
