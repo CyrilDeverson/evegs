@@ -47,8 +47,8 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
     this.catalogueService.ajouter(article);
   }
 
-  supprimerArticle(reference: String) {
-    this.catalogueService.supprimer(reference);
+  supprimerArticle(id: number) {
+    this.catalogueService.supprimer(id);
   }
 
   ngAfterViewInit() {

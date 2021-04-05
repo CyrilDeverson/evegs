@@ -55,7 +55,7 @@
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef i18n="@@catalogue.action">Action</mat-header-cell>
           <mat-cell *matCellDef="let article">
-            <button mat-icon-button color="accent" (click)='supprimerArticle(article.reference)'>
+            <button mat-icon-button color="accent" (click)='supprimerArticle(article.id)'>
               <mat-icon>remove_circle</mat-icon>
             </button>
           </mat-cell>

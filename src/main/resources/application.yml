@@ -10,6 +10,9 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
 
 # Data Rest
   data.rest.base-path: /data
@@ -17,5 +20,5 @@ spring:
 server.port: 1234
 
 #logging.level.org.springframework: DEBUG
-debug: true
-trace: true
+#debug: true
+#trace: true

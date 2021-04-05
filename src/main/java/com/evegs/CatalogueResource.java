@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,13 +25,13 @@ public class CatalogueResource {
 	@Autowired
 	private CatalogueRepository articles;
 
-	@GetMapping("/")
+	@GetMapping
 	Page<Article> list(Pageable pageable) {
 		return articles.findAll(pageable);
 	}
 	
-	@PostMapping("/")
-	ResponseEntity<Object> add(@Valid Article article) {
+	@PostMapping
+	ResponseEntity<Object> add(@Valid @RequestBody Article article) {
 		articles.save(article);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
