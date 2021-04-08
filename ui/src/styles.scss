@@ -37,3 +37,12 @@ $ui-theme: mat-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@import '../node_modules/ag-grid-community/src/styles/ag-grid.scss';
+@import '../node_modules/ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin.scss';
+
+.ag-theme-material {
+  @include ag-theme-material((
+//      odd-row-background-color: #CFD8DC
+  ));
+}

@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { timeout } from 'q';
+import { ColDef, RowNode } from 'ag-grid-community';
 
 @Component({
   selector: 'evegs-catalogue',
@@ -13,34 +14,35 @@ import { timeout } from 'q';
 })
 export class CatalogueComponent implements OnInit, AfterViewInit {
 
-  articleForm: FormGroup;
-  reference: FormControl;
-  libelle: FormControl;
-
   displayedColumns = ['reference', 'libelle', 'action'];
   dataSource: MatTableDataSource<Article> = new MatTableDataSource<Article>();
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator|null = null;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | null = null;
   @ViewChild(MatSort, { static: false }) sort: MatSort | null = null;
 
-  constructor(private fb: FormBuilder, private catalogueService: CatalogueService) {
-    this.reference = fb.control('', [Validators.required, referenceUnique(this.catalogueService)]);
-    this.libelle = fb.control('', Validators.required);
+  // columnDefs: ColDef[] = [
+  //   { field: 'reference', headerName: 'Référence', editable: true },
+  //   { field: 'label', headerName: 'Libellé' },
+  //   { field: 'action', headerName: 'Action' }
+  // ];
 
-    this.articleForm = this.fb.group({
-      reference: this.reference,
-      libelle: this.libelle
-    });
+  // rowData = [
+  //   { reference: 'Toyota', label: 'Celica', action: 35000 },
+  //   { reference: 'Ford', label: 'Mondeo', action: 32000 },
+  //   { reference: 'Porsche', label: 'Boxter', action: 72000 }
+  // ];
+
+  // defaultColDef: ColDef = {
+  //   flex: 1,
+  //   sortable: true,
+  //   onCellValueChanged: this.cellValueChanged
+  // }
+
+  constructor(private catalogueService: CatalogueService) {
   }
 
   ngOnInit() {
     this.catalogueService.articles.subscribe(articles => this.dataSource.data = articles);
-  }
-
-  onSubmit() {
-    this.ajouterArticle(this.articleForm.value);
-
-    this.articleForm.reset();
   }
 
   ajouterArticle(article: Article) {
@@ -61,11 +63,14 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
+
+  // cellValueChanged(params: ValueChangedEvent) {
+  //   alert("params.data: " + JSON.stringify(params.data) + ", params.newValue" + params.newValue);
+  // }
 }
 
-export function referenceUnique(catalogueService: CatalogueService): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const article = catalogueService.chercherParReference(control.value);
-    return article ? {'referenceUnique': {value: control.value}} : null;
-  };
-}
+// class ValueChangedEvent {
+//     data: any;
+//     oldValue: any;
+//     newValue: any;
+// }

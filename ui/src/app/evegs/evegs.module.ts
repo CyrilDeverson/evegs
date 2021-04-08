@@ -12,6 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { AgGridModule } from 'ag-grid-angular';
+import { ArticleComponent } from './catalogue/article/article.component';
 
 @NgModule({
   imports: [
@@ -26,9 +28,10 @@ import { MatTableModule } from '@angular/material/table';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatExpansionModule
+    MatExpansionModule,
+    AgGridModule.withComponents([]),
   ],
-  declarations: [CatalogueComponent],
+  declarations: [CatalogueComponent, ArticleComponent],
   exports: [CatalogueComponent],
   providers: []
 })
