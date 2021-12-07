@@ -1,0 +1,23 @@
+<evegs-ajouter-article (ajouter)='ajouterArticle($event)'></evegs-ajouter-article>
+
+<mat-card class="articles">
+  <mat-card-header>
+      <mat-card-title i18n="@@catalogue.list">Lister les articles</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+      <ag-grid-angular
+        class="ag-theme-custom-angular"
+        rowSelection="multiple"
+        domLayout="autoHeight"
+        [rowData]="rowData | async"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        (gridReady)="onGridReady($event)"
+        (selectionChanged)="onSelectionChanged($event)"
+    >
+    </ag-grid-angular>
+    <button [disabled]="!hasSelectedRows" mat-icon-button color="accent" (click)='supprimer()' i18n-title="@@article.delete" title="Supprimer la séléction">
+      <mat-icon>remove_circle</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
