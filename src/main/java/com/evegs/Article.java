@@ -1,11 +1,11 @@
 package com.evegs;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import java.util.UUID;
+
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,21 +13,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@Document(collection = "articles")
 @Data
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(uniqueConstraints = {@UniqueConstraint(name = "UK_ARTICLE_REFERENCE", columnNames = {"reference"})})
+@ToString
 public class Article {
 	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@Column(nullable = false)
+	@Builder.Default
+	private UUID id = UUID.randomUUID();
+
+	@NotBlank
 	private String reference;
 
-	@Column(nullable = false)
+	@NotBlank
 	private String libelle;
 }

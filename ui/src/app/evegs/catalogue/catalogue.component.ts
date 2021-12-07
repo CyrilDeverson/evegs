@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { CatalogueService, Article } from './catalogue.service';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, NgForm, ValidationErrors, FormControl } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { timeout } from 'q';
-import { ColDef, RowNode } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community';
+import { Article, CatalogueService } from './catalogue.service';
 
 @Component({
   selector: 'evegs-catalogue',
@@ -20,23 +18,23 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | null = null;
   @ViewChild(MatSort, { static: false }) sort: MatSort | null = null;
 
-  // columnDefs: ColDef[] = [
-  //   { field: 'reference', headerName: 'Référence', editable: true },
-  //   { field: 'label', headerName: 'Libellé' },
-  //   { field: 'action', headerName: 'Action' }
-  // ];
+  columnDefs: ColDef[] = [
+    { field: 'reference', headerName: 'Référence', editable: true },
+    { field: 'label', headerName: 'Libellé' },
+    { field: 'action', headerName: 'Action' }
+  ];
 
-  // rowData = [
-  //   { reference: 'Toyota', label: 'Celica', action: 35000 },
-  //   { reference: 'Ford', label: 'Mondeo', action: 32000 },
-  //   { reference: 'Porsche', label: 'Boxter', action: 72000 }
-  // ];
+  rowData = [
+    { reference: 'Toyota', label: 'Celica', action: 35000 },
+    { reference: 'Ford', label: 'Mondeo', action: 32000 },
+    { reference: 'Porsche', label: 'Boxter', action: 72000 }
+  ];
 
-  // defaultColDef: ColDef = {
-  //   flex: 1,
-  //   sortable: true,
-  //   onCellValueChanged: this.cellValueChanged
-  // }
+  defaultColDef: ColDef = {
+    flex: 1,
+    sortable: true,
+    onCellValueChanged: this.cellValueChanged
+  }
 
   constructor(private catalogueService: CatalogueService) {
   }
@@ -64,13 +62,13 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  // cellValueChanged(params: ValueChangedEvent) {
-  //   alert("params.data: " + JSON.stringify(params.data) + ", params.newValue" + params.newValue);
-  // }
+  cellValueChanged(params: ValueChangedEvent) {
+    alert("params.data: " + JSON.stringify(params.data) + ", params.newValue" + params.newValue);
+  }
 }
 
-// class ValueChangedEvent {
-//     data: any;
-//     oldValue: any;
-//     newValue: any;
-// }
+class ValueChangedEvent {
+    data: any;
+    oldValue: any;
+    newValue: any;
+}

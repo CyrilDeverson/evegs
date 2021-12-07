@@ -1,6 +1,6 @@
-import {of as observableOf, throwError as observableThrowError,  Observable, BehaviorSubject } from 'rxjs';
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export class Article {
   constructor(public id: number, public reference: String, public libelle: String) {}
@@ -13,7 +13,7 @@ export class Page<T> {
   providedIn: 'root'
 })
 export class CatalogueService {
-  private static readonly DEFAULT_ARTICLE = new Article(1, 'legrand-ref1', 'Prise Courant');
+  private static readonly API_CATALOGUE = '/api/articles';
 
   private _articles = new BehaviorSubject<Article[]>([]);
 
@@ -22,7 +22,7 @@ export class CatalogueService {
   }
 
   ajouter(article: Article) {
-    this.http.post("/articles", article).subscribe(
+    this.http.post(CatalogueService.API_CATALOGUE, article).subscribe(
       next => console.log('Article créé!'),
       error => console.error('Article non créé: ' + error)
     );
@@ -39,7 +39,7 @@ export class CatalogueService {
 
   supprimer(id: number) {
     console.log('Suppression de l\'article: ' + id);
-    this.http.delete("/articles/" + id).subscribe(
+    this.http.delete(CatalogueService.API_CATALOGUE + '/' + id).subscribe(
       next => console.log('Article supprimé!'),
       error => console.error('Article non supprimé: ' + error)
     );
@@ -51,6 +51,6 @@ export class CatalogueService {
   }
 
   private update() {
-    return this.http.get<Page<Article>>("/articles").subscribe(next => this._articles.next(next.content));
+    return this.http.get<Page<Article>>(CatalogueService.API_CATALOGUE).subscribe(next => this._articles.next(next.content));
   }
 }

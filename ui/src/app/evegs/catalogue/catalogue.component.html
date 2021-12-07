@@ -42,11 +42,12 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
   </mat-card-content>
-  <!-- <mat-card-content>
+  <mat-card-content>
     <div class="mat-elevation-z8">
       <ag-grid-angular
           style="height: 201px;"
           class="ag-theme-material"
+          rowStyle='infinite'
           [rowData]="rowData"
           [columnDefs]="columnDefs"
           [defaultColDef]="defaultColDef"
@@ -54,4 +55,4 @@
         </ag-grid-angular>
       </div>
   </mat-card-content>
-</mat-card> -->
+</mat-card>
